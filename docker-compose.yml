@@ -7,5 +7,7 @@ services:
       restart: always
       volumes:
         - ./nginx/conf/:/etc/nginx/conf.d/:ro
-        - ./certbot/etc/letsencrypt/live:/etc/letsencrypt/live:ro
+        # needs both /live & /archive
+        - ./certbot/etc/letsencrypt/:/etc/letsencrypt/:ro 
         - ./certbot/var/www/acme/:/var/www/acme/:ro
+        - ./packages/frontend/dist/:/usr/share/nginx/html/:ro
