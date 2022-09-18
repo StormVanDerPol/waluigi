@@ -1,0 +1,11 @@
+services:
+  nginx:
+      image: nginx
+      ports:
+        - 80:80
+        - 443:443
+      restart: always
+      volumes:
+        - ./nginx/conf/:/etc/nginx/conf.d/:ro
+        - ./certbot/etc/letsencrypt/live:/etc/letsencrypt/live:ro
+        - ./certbot/var/www/acme/:/var/www/acme/:ro

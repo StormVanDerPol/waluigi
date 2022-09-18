@@ -1,4 +1,12 @@
 {
   "name": "apple-tryout",
-  "packageManager": "yarn@3.2.3"
+  "packageManager": "yarn@3.2.3",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "container": "docker compose -f docker-compose.yml up",
+    "stop": "docker compose -f docker-compose.yml down --remove-orphans"
+  }
 }
+
