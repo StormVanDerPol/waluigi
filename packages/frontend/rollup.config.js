@@ -73,12 +73,7 @@ export default {
     babel({
       presets: ["@babel/preset-react"],
     }),
-    postcss({
-      plugins: {
-        tailwindcss: {},
-        autoprefixer: {},
-      }
-    }),
+    postcss(),
     commonjs(),
     html({
       publicPath: "",

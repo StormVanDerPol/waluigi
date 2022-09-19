@@ -1692,15 +1692,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"apple-tryout@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "apple-tryout@workspace:."
-  dependencies:
-    concurrently: ^7.4.0
-    prettier: ^2.7.1
-  languageName: unknown
-  linkType: soft
-
 "aproba@npm:^1.0.3 || ^2.0.0":
   version: 2.0.0
   resolution: "aproba@npm:2.0.0"
@@ -4987,6 +4978,15 @@ __metadata:
   checksum: 0b5d94e2b3c11e7937b40fc5dac1e80d8b92a330e68c51f1d271ce6980c70adca42a3f8cd47c4a5769956bada074823b53374f2dc5f2ea5c2121b222dec6eadf
   languageName: node
   linkType: hard
+
+"something@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "something@workspace:."
+  dependencies:
+    concurrently: ^7.4.0
+    prettier: ^2.7.1
+  languageName: unknown
+  linkType: soft
 
 "source-map-js@npm:^1.0.2":
   version: 1.0.2
