@@ -1,6 +1,6 @@
-const { request } = require("undici");
-const jwt = require("jsonwebtoken");
-const jwkToPem = require("jwk-to-pem");
+const { request } = require('undici');
+const jwt = require('jsonwebtoken');
+const jwkToPem = require('jwk-to-pem');
 
 let certsMemo = null;
 
@@ -11,17 +11,16 @@ async function verifyAppleJWT(authorization, nonce) {
   let webtoken = null;
 
   if (!certsMemo) {
-    const res = await request('https://appleid.apple.com/auth/keys', { method: "GET" });
+    const res = await request('https://appleid.apple.com/auth/keys', { method: 'GET' });
     const body = await res.body.json();
-    
+
     JWKSet = body.keys;
-    const certs = JWKSet.map( (jwk) => jwkToPem(jwk))
+    const certs = JWKSet.map((jwk) => jwkToPem(jwk));
     certsMemo = certs;
   }
 
   for (const cert of certsMemo) {
     try {
-
       webtoken = jwt.verify(id_token, cert, { algorithms: ['RS256'], issuer: 'https://appleid.apple.com', audience: 'test.com.resumedia.apple-auth', nonce });
     } catch (error) {
       //  Failed to verify with current JWK.
@@ -35,14 +34,14 @@ async function verifyAppleJWT(authorization, nonce) {
     throw err;
   }
 
-  console.log("[APPLE AUTH DEBUG] 🐱🐱🐱 Authentication success!!!! 🐱🐱🐱")
+  console.log('[APPLE AUTH DEBUG] 🐱🐱🐱 Authentication success!!!! 🐱🐱🐱');
   return webtoken;
 }
 
 const appleAuth = (req) => {
-  const {authorization, nonce} = req.body;
+  const { authorization, nonce } = req.body;
   const webtoken = verifyAppleJWT(authorization, nonce);
-  return webtoken
-}
+  return webtoken;
+};
 
-module.exports = appleAuth
+module.exports = appleAuth;

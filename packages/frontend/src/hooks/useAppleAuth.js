@@ -34,13 +34,13 @@ export function useAppleAuth() {
       window.AppleID.auth.init({
         clientId: 'test.com.resumedia.apple-auth',
         scope: 'name email',
-        redirectURI: "https://kwkz.moe",
+        redirectURI: 'https://kwkz.moe',
         state: `${window.location.pathname}${window.location.search}`,
         nonce, // wtf
         usePopup: true,
       });
     } catch (error) {
-      console.error("Apple client error", error);
+      console.error('Apple client error', error);
     }
   }, [ready, nonce]);
 
@@ -52,7 +52,7 @@ export function useAppleAuth() {
 
       return client.post(authAppleEndpoint, { ...authData, nonce });
     } catch (error) {
-      console.error("Apple sign in error", error);
+      console.error('Apple sign in error', error);
       return null;
     }
   }, [ready, nonce]);

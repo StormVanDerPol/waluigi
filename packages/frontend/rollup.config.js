@@ -1,14 +1,12 @@
 import html from '@rollup/plugin-html';
-import { babel } from "@rollup/plugin-babel"
+import { babel } from '@rollup/plugin-babel';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import commonjs from "@rollup/plugin-commonjs";
+import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
-import { terser } from "rollup-plugin-terser";
-import postcss from 'rollup-plugin-postcss'
+import { terser } from 'rollup-plugin-terser';
+import postcss from 'rollup-plugin-postcss';
 
-
-const template = ({ files, publicPath, }) => {
-
+const template = ({ files, publicPath }) => {
   const links = (files.css || [])
     .map(({ fileName }) => {
       return `<link href="${publicPath}${fileName}" rel="stylesheet">`;
@@ -20,7 +18,6 @@ const template = ({ files, publicPath, }) => {
       return `<script src="${publicPath}${fileName}" async="true" defer="true"></script>`;
     })
     .join('\n');
-
 
   return `
 <!DOCTYPE html>
@@ -36,50 +33,47 @@ const template = ({ files, publicPath, }) => {
   <div id="app"></div>
     ${scripts}
   </body>
-</html>`
-}
+</html>`;
+};
 
 const bundleTypes = {
   esm: {
-    entryFileNames: "[name].[hash].js",
+    entryFileNames: '[name].[hash].js',
     dir: 'dist',
-    format: 'esm'
+    format: 'esm',
   },
   cjs: {
-    entryFileNames: "[name].[hash].cjs.js",
-    dir: 'dist',
-    format: 'cjs'
-  },
-  min: {
-    entryFileNames: "[name].[hash].min.js",
+    entryFileNames: '[name].[hash].cjs.js',
     dir: 'dist',
     format: 'cjs',
-  }
-}
+  },
+  min: {
+    entryFileNames: '[name].[hash].min.js',
+    dir: 'dist',
+    format: 'cjs',
+  },
+};
 
 export default {
   input: 'src/index.js',
-  output: [
-    bundleTypes.min
-  ],
+  output: [bundleTypes.min],
   plugins: [
     nodeResolve({
-      extensions: [".js"],
+      extensions: ['.js'],
     }),
     replace({
       preventAssignment: true,
-      'process.env.NODE_ENV': JSON.stringify('development')
+      'process.env.NODE_ENV': JSON.stringify('development'),
     }),
     babel({
-      presets: ["@babel/preset-react"],
+      presets: ['@babel/preset-react'],
     }),
     postcss(),
     commonjs(),
     html({
-      publicPath: "",
+      publicPath: '',
       template,
     }),
-    terser()
+    terser(),
   ],
-
 };
