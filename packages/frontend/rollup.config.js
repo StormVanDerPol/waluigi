@@ -3,6 +3,7 @@ import { babel } from "@rollup/plugin-babel"
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from "@rollup/plugin-commonjs";
 import replace from '@rollup/plugin-replace';
+import { terser } from "rollup-plugin-terser";
 
 
 
@@ -40,11 +41,25 @@ return `
 
 export default {
   input: 'src/index.js',
-  output: {
+  output: [{
     entryFileNames: "[name].[hash].js",
     dir: 'dist',
-    format: 'iife'
-  },
+    format: 'esm'
+  }, 
+
+    {
+      entryFileNames: "[name].[hash].cjs.js",
+      dir: 'dist',
+      format: 'cjs'
+    },
+
+    {
+      entryFileNames: "[name].[hash].min.js",
+      dir: 'dist',
+      format: 'cjs',
+      plugins: [terser()]
+    }
+  ],
   plugins: [
     nodeResolve({
       extensions: [".js"],

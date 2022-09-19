@@ -1,0 +1,6 @@
+certbot/**/*
+.yarn/**/*
+.editorconfig
+.pnp.cjs
+.pnp.loader.mjs
+dist

@@ -5,7 +5,12 @@
     "packages/*"
   ],
   "scripts": {
+    "start": "yarn && yarn workspace frontend build && yarn container",
     "container": "docker compose -f docker-compose.yml up",
-    "stop": "docker compose -f docker-compose.yml down --remove-orphans"
+    "stop": "docker compose -f docker-compose.yml down --remove-orphans",
+    "prettier": "prettier --write --loglevel error \"**/*.+(js|jsx|json|yml|yaml|css|ts|tsx|md|mdx|html)\""
+  },
+  "devDependencies": {
+    "prettier": "^2.7.1"
   }
 }
