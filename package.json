@@ -1,16 +1,19 @@
 {
-  "name": "apple-tryout",
+  "name": "something",
   "packageManager": "yarn@3.2.3",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "start": "yarn && yarn workspace frontend build && yarn container",
-    "container": "docker compose -f docker-compose.yml up",
+    "start": "yarn && yarn container",
+    "container": "docker compose -f docker-compose.yml up --build",
     "stop": "docker compose -f docker-compose.yml down --remove-orphans",
     "prettier": "prettier --write --loglevel error \"**/*.+(js|jsx|json|yml|yaml|css|ts|tsx|md|mdx|html)\""
   },
   "devDependencies": {
     "prettier": "^2.7.1"
+  },
+  "dependencies": {
+    "concurrently": "^7.4.0"
   }
 }

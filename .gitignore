@@ -8,3 +8,6 @@
 .pnp.cjs
 .pnp.loader.mjs
 certbot
+whitelist.conf
+node_modules
+.editorconfig

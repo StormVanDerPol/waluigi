@@ -1,4 +1,16 @@
 services:
+
+  app:
+      build: .
+      container_name: apple_tryout_node_app
+      ports:
+        - 6060:6060
+      command: yarn workspace backend start
+      environment:
+        - NODE_ENV=production
+      volumes:
+        - ./packages/frontend/dist/:/app/packages/frontend/dist/
+  
   nginx:
       image: nginx
       ports:

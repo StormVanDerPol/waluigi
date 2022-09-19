@@ -4,25 +4,25 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from "@rollup/plugin-commonjs";
 import replace from '@rollup/plugin-replace';
 import { terser } from "rollup-plugin-terser";
+import postcss from 'rollup-plugin-postcss'
 
 
+const template = ({ files, publicPath, }) => {
 
-const template = ({  files, publicPath, }) => {
-    
-const links = (files.css || [])
-.map(({ fileName }) => {
-  return `<link href="${publicPath}${fileName}" rel="stylesheet">`;
-})
-.join('\n');
+  const links = (files.css || [])
+    .map(({ fileName }) => {
+      return `<link href="${publicPath}${fileName}" rel="stylesheet">`;
+    })
+    .join('\n');
 
-const scripts = (files.js || [])
-.map(({ fileName }) => {
-  return `<script src="${publicPath}${fileName}" async="true" defer="true"></script>`;
-})
-.join('\n');
+  const scripts = (files.js || [])
+    .map(({ fileName }) => {
+      return `<script src="${publicPath}${fileName}" async="true" defer="true"></script>`;
+    })
+    .join('\n');
 
 
-return `
+  return `
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -39,40 +39,52 @@ return `
 </html>`
 }
 
-export default {
-  input: 'src/index.js',
-  output: [{
+const bundleTypes = {
+  esm: {
     entryFileNames: "[name].[hash].js",
     dir: 'dist',
     format: 'esm'
-  }, 
+  },
+  cjs: {
+    entryFileNames: "[name].[hash].cjs.js",
+    dir: 'dist',
+    format: 'cjs'
+  },
+  min: {
+    entryFileNames: "[name].[hash].min.js",
+    dir: 'dist',
+    format: 'cjs',
+  }
+}
 
-    {
-      entryFileNames: "[name].[hash].cjs.js",
-      dir: 'dist',
-      format: 'cjs'
-    },
-
-    {
-      entryFileNames: "[name].[hash].min.js",
-      dir: 'dist',
-      format: 'cjs',
-      plugins: [terser()]
-    }
+export default {
+  input: 'src/index.js',
+  output: [
+    bundleTypes.min
   ],
   plugins: [
     nodeResolve({
       extensions: [".js"],
     }),
     replace({
-      'process.env.NODE_ENV': JSON.stringify( 'development' )
+      preventAssignment: true,
+      'process.env.NODE_ENV': JSON.stringify('development')
     }),
     babel({
       presets: ["@babel/preset-react"],
     }),
+    postcss({
+      plugins: {
+        tailwindcss: {},
+        autoprefixer: {},
+      }
+    }),
     commonjs(),
     html({
-        publicPath: "",
-        template,
-    })]
+      publicPath: "",
+      template,
+    }),
+    terser()
+  ],
+
 };
