@@ -9,5 +9,6 @@
 .pnp.loader.mjs
 certbot
 whitelist.conf
+blacklist.conf
 node_modules
 .editorconfig
