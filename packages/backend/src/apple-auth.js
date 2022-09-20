@@ -14,7 +14,7 @@ async function verifyAppleJWT(authorization, nonce) {
     const res = await request('https://appleid.apple.com/auth/keys', { method: 'GET' });
     const body = await res.body.json();
 
-    JWKSet = body.keys;
+    const JWKSet = body.keys;
     const certs = JWKSet.map((jwk) => jwkToPem(jwk));
     certsMemo = certs;
   }
